@@ -1,0 +1,2 @@
+class SubscriptionAlreadyExists(Exception):
+    pass
