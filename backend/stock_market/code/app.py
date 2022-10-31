@@ -5,6 +5,6 @@ from code import handlers
 from code.config import TORTOISE_CONFIG
 
 app = FastAPI()
-app.add_api_route('/news/{symbol}', handlers.get_company_news)
+app.add_api_route('/news/{symbol}', handlers.get_news_by_symbol)
 
 register_tortoise(app, config=TORTOISE_CONFIG)
