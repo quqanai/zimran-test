@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from code.client import FinnhubClient
+from code.clients import FinnhubClient
 from code.consts import SYMBOLS
 from code.models import News
 from ._base import BaseService
