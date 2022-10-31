@@ -17,6 +17,7 @@ services:
   stock-market-worker:
     build: ./stock_market
     environment:
+      FINNHUB_API_KEY: cb36h0aad3i3uh8votcg
       DATABASE_URL: postgres://postgres:postgres@stock-market-db:5432/postgres
     volumes:
       - ./stock_market:/app
@@ -29,3 +30,5 @@ services:
     image: postgres:alpine
     environment:
       POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'

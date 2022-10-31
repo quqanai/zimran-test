@@ -3,7 +3,7 @@ from pydantic import BaseSettings, PostgresDsn
 
 class Settings(BaseSettings):
     database_url: PostgresDsn
-    finnhub_api_key: str
+    finnhub_api_key: str = None
 
     class Config:
         env_file = '.env'
