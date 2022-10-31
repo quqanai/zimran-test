@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  stock-market:
+    build: ./stock_market
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@stock-market-db:5432/postgres
+    volumes:
+      - ./stock_market:/app
+    depends_on:
+      - stock-market-db
+    ports:
+      - '8000:8000'
+    tty: true
+    command: uvicorn code.app:app --host 0.0.0.0 --reload
+
+  stock-market-worker:
+    build: ./stock_market
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@stock-market-db:5432/postgres
+    volumes:
+      - ./stock_market:/app
+    depends_on:
+      - stock-market-db
+    tty: true
+    command: python -m code.worker
+
+  stock-market-db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
