@@ -1,20 +1,22 @@
 from datetime import datetime
 
 from code.clients import FinnhubClient
-from code.consts import SYMBOLS
 from code.models import News
 from ._base import BaseService
 
 
 class CompanyNewsUpdateService(BaseService):
-    async def _fetch_company_news(self, symbol: str):
+    def __init__(self, symbol: str):
+        self._symbol = symbol
+
+    async def _fetch_company_news(self):
         async with FinnhubClient() as client:
-            return await client.get_company_news(symbol)
+            return await client.get_company_news(self._symbol)
 
     def _parse_news(self, news: dict):
         parsed_news = {
             'id': news['id'],
-            'symbol': news['related'],
+            'symbol': self._symbol,
             'title': news['headline'],
             'content': None,
             'image_url': None,
@@ -38,7 +40,6 @@ class CompanyNewsUpdateService(BaseService):
         )
 
     async def do(self):
-        for symbol in SYMBOLS:
-            news = await self._fetch_company_news(symbol)
-            parsed_news = map(self._parse_news, news)
-            await self._save_company_news(parsed_news)
+        news = await self._fetch_company_news()
+        parsed_news = map(self._parse_news, news)
+        await self._save_company_news(parsed_news)

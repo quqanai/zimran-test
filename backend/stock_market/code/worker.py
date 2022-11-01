@@ -5,11 +5,16 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from tortoise import Tortoise
 
 from code.config import TORTOISE_CONFIG
+from code.consts import SYMBOLS
 from code.services import CompanyNewsUpdateService
 
 
 async def update_company_news():
-    await CompanyNewsUpdateService().do()
+    tasks = (
+        CompanyNewsUpdateService(symbol).do()
+        for symbol in SYMBOLS
+    )
+    await asyncio.gather(*tasks)
 
 
 scheduler = AsyncIOScheduler(timezone='UTC')
