@@ -1,15 +1,18 @@
-from datetime import date, timedelta
+from datetime import date
 
 from fastapi import HTTPException, status
 
-from code.consts import SYMBOLS
-from code.models import News
+from code.exceptions import UnsupportedSymbol
+from code.services import CompanyNewsListService
 
 
-async def get_news_by_symbol(symbol: str, date_from: date, date_to: date):
-    if symbol.upper() not in set(SYMBOLS):
+async def get_news_by_symbol(
+    symbol: str, page: int = 1, page_size: int = 5,
+    date_from: date = None, date_to: date = None,
+):
+    service = CompanyNewsListService(symbol, page, page_size, date_from, date_to)
+
+    try:
+        return await service.do()
+    except UnsupportedSymbol:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-
-    return await News.filter(
-        symbol=symbol, published_at__gte=date_from, published_at__lte=date_to + timedelta(days=1),
-    )
