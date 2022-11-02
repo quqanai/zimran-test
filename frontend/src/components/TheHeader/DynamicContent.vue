@@ -7,7 +7,7 @@
         fixed-width
       />
     </router-link>
-    <h1 class="text-[#15152B] font-semibold text-base">{{ props.title }}</h1>
+    <h2 class="text-[#15152B] font-semibold text-base">{{ props.title }}</h2>
   </div>
 </template>
 

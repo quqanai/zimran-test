@@ -8,7 +8,7 @@ const routes = [
     component: NewsView,
   },
   {
-    path: "/news/:id",
+    path: "/news/:newsId",
     name: "newsDetails",
     component: () =>
       import(

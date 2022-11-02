@@ -4,11 +4,21 @@
     <h1 class="capitalize text-xl font-semibold mb-4 text-[#15152B]">
       Discover market news
     </h1>
-    <news-list />
+    <news-list :page="state.page" />
   </main>
 </template>
 
 <script setup>
+import { reactive, watch } from "vue";
+import { useRoute } from "vue-router";
 import TheHeader from "@/components/TheHeader/TheHeader.vue";
 import NewsList from "@/components/NewsList/NewsList.vue";
+
+const route = useRoute();
+const page = Number(route.query.page) || 1;
+const state = reactive({ page: page });
+
+watch(page, () => {
+  state.page = page;
+});
 </script>
