@@ -1,1 +1,1 @@
-SYMBOLS = 'TSLA', 'FB', 'AMZN', 'TWTR', 'NFLX'
+SYMBOLS = 'TSLA', 'META', 'AMZN', 'TWTR', 'NFLX'
