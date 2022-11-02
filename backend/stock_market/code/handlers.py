@@ -1,20 +1,21 @@
 from datetime import date
 
-from fastapi import HTTPException, status
+from fastapi import Depends, HTTPException, status
+from fastapi_pagination import Params
 
 from code.exceptions import NewsNotFound, UnsupportedSymbol
 from code.services import CompanyNewsListService, NewsDetailsService, NewsListService
 
 
-async def get_news(page: int = 1, page_size: int = 5):
-    return await NewsListService(page, page_size).do()
+async def get_news(params: Params = Depends()):
+    return await NewsListService(params).do()
 
 
 async def get_news_by_symbol(
-    symbol: str, page: int = 1, page_size: int = 5,
+    symbol: str, params: Params = Depends(),
     date_from: date = None, date_to: date = None,
 ):
-    service = CompanyNewsListService(symbol, page, page_size, date_from, date_to)
+    service = CompanyNewsListService(symbol, params, date_from, date_to)
 
     try:
         return await service.do()

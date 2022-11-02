@@ -14,9 +14,7 @@ class Company(Model):
 
 class News(Model):
     id = fields.IntField(pk=True)  # noqa: A003
-    company = fields.ForeignKeyField(
-        'models.Company', related_name='news', source_field='company_symbol',
-    )
+    company = fields.ForeignKeyField('models.Company', related_name='news')
     title = fields.CharField(max_length=500)
     content = fields.TextField(null=True)
     image_url = fields.TextField(null=True)

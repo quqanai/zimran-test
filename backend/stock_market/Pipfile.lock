@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c99f3a758f488da1a1b13b1aaf98ec6351147e973c23b8de36cff39ac6e0af0e"
+            "sha256": "60233ca0edf9e08c6c328a2bbb5b8ee765c65b1830ba437ad15d77b66960c620"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -121,6 +121,14 @@
             "index": "pypi",
             "version": "==0.85.2"
         },
+        "fastapi-pagination": {
+            "hashes": [
+                "sha256:513401bee242d5965ca2edef77a44c62b5e9e23eb32fb020c1c4ae9ffbf972cd",
+                "sha256:cc9db23dabc9ce49e2c24a046ffcb58eedab4c1a3ace7fffa03eed44ed2936e5"
+            ],
+            "index": "pypi",
+            "version": "==0.10.0"
+        },
         "h11": {
             "hashes": [
                 "sha256:36a3cb8c0a032f56e2da7084577878a035d3b61d104230d4bd49c0c6b555a9c6",
@@ -213,10 +221,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:335ab46900b1465e714b4fda4963d87363264eb662aab5e65da039c25f1f5b22",
-                "sha256:c4d88f472f54d615e9cd582a5004d1e5f624854a6a27a6211591c251f22a6914"
+                "sha256:222439474e9c98fced559f1709d89e6c9cbf8d79c794ff3eb9f8800064291427",
+                "sha256:e89512406b793ca39f5971bc999cc538ce125c0e51c27941bef4568b460095e2"
             ],
-            "version": "==2022.5"
+            "version": "==2022.6"
         },
         "pytz-deprecation-shim": {
             "hashes": [
@@ -336,11 +344,11 @@
         },
         "flake8-builtins": {
             "hashes": [
-                "sha256:39bfa3badb5e8d22f92baf4e0ea1b816707245233846932d6b13e81fc6f673e8",
-                "sha256:98833fa16139a75cd4913003492a9bd9a61c6f8ac146c3db12a2ebaf420dade3"
+                "sha256:5aeb420130efe8acbdaf8708a582492413293a3ca25653518f687937879650a5",
+                "sha256:a5b9ca9cbc921c4455ea02e2e9963c990ac66d028c15b654625e012a1e3bbb4d"
             ],
             "index": "pypi",
-            "version": "==2.0.0"
+            "version": "==2.0.1"
         },
         "flake8-commas": {
             "hashes": [

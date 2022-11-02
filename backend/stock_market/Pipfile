@@ -11,6 +11,7 @@ tortoise-orm = "*"
 aerich = "*"
 asyncpg = "*"
 apscheduler = "*"
+fastapi-pagination = "*"
 
 [dev-packages]
 flake8 = "*"

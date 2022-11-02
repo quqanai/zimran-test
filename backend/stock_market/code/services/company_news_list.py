@@ -1,19 +1,20 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+from fastapi_pagination import Params
+
 from code.consts import SYMBOLS
 from code.exceptions import UnsupportedSymbol
 from code.models import News
-from ._base import BaseService
-from ._mixins import PaginationMixin
+from ._pagination import PaginationService
 
 
-class CompanyNewsListService(PaginationMixin, BaseService):
+class CompanyNewsListService(PaginationService):
     def __init__(
-        self, symbol: str, page: int, page_size: int,
+        self, symbol: str, params: Params,
         date_from: Optional[datetime], date_to: Optional[datetime],
     ):
-        super().__init__(page, page_size)
+        super().__init__(params)
         self._symbol = symbol.upper()
         self._date_from = date_from
         self._date_to = date_to
@@ -33,17 +34,10 @@ class CompanyNewsListService(PaginationMixin, BaseService):
 
         return kwargs
 
-    async def _get_company_news(self, filter_kwargs: dict):
-        offset = self._get_offset()
-        return await (
-            News.filter(**filter_kwargs)
-                .order_by('-published_at')
-                .offset(offset)
-                .limit(self._page_size)
-                .values('id', 'title', 'content', 'published_at', 'image_url')  # noqa: C812
-        )
+    def _get_query(self):
+        filter_kwargs = self._get_filter_kwargs()
+        return News.filter(**filter_kwargs).order_by('-published_at')
 
     async def do(self):
         self._validate()
-        filter_kwargs = self._get_filter_kwargs()
-        return await self._get_company_news(filter_kwargs)
+        return await super().do()

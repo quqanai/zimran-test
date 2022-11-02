@@ -36,7 +36,7 @@ class CompanyNewsUpdateService(BaseService):
         await News.bulk_create(
             objects,
             on_conflict=['id'],
-            update_fields=['company_symbol', 'title', 'content', 'image_url', 'published_at'],
+            update_fields=['company_id', 'title', 'content', 'image_url', 'published_at'],
         )
 
     async def do(self):
