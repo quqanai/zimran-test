@@ -4,9 +4,9 @@ const httpClient = axios.create({
   baseURL: process.env.VUE_APP_STOCK_MARKET_API_URL,
 });
 
-const fetchNews = async () => {
+const fetchNews = async (page) => {
   const response = await httpClient.get("/news", {
-    params: { page_size: 4 },
+    params: { page, size: 4 },
   });
   return response.data;
 };

@@ -1,5 +1,5 @@
 <template>
-  <the-header :title="String(state.news.id)" />
+  <the-header :title="String(state.news.company__name)" />
   <main class="p-6">
     <h1 class="capitalize text-xl font-semibold mb-2 text-[#15152B]">
       {{ state.news.title }}

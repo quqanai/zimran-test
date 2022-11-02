@@ -3,7 +3,11 @@
     <div class="space-y-2">
       <news-card v-for="news in state.news" :key="news.id" :news="news" />
     </div>
-    <the-pagination :page="props.page" />
+    <the-pagination
+      :page="props.page"
+      :total="state.total"
+      :size="state.size"
+    />
   </div>
 </template>
 
@@ -16,9 +20,16 @@ import { fetchNews } from "@/api/newsApi";
 const props = defineProps({
   page: Number,
 });
-const state = reactive({ news: [] });
+const state = reactive({
+  news: [],
+  total: 0,
+  size: 0,
+});
 
 onMounted(async () => {
-  state.news = await fetchNews();
+  const { items, total, size } = await fetchNews(props.page);
+  state.news = items;
+  state.total = total;
+  state.size = size;
 });
 </script>

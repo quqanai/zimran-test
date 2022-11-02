@@ -7,7 +7,7 @@
         fixed-width
       />
     </router-link>
-    <div class="grow flex space-x-2 items-center">
+    <div class="grow flex space-x-2 justify-center items-center">
       <div
         class="rounded text-sm bg-[#EAEAFF] border border-[#5653FE] text-[#5653FE] px-3 py-1"
       >
@@ -29,5 +29,7 @@ import { defineProps } from "vue";
 
 const props = defineProps({
   page: Number,
+  total: Number,
+  size: Number,
 });
 </script>
