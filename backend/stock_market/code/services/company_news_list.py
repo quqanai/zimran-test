@@ -5,16 +5,16 @@ from code.consts import SYMBOLS
 from code.exceptions import UnsupportedSymbol
 from code.models import News
 from ._base import BaseService
+from ._mixins import PaginationMixin
 
 
-class CompanyNewsListService(BaseService):
+class CompanyNewsListService(PaginationMixin, BaseService):
     def __init__(
         self, symbol: str, page: int, page_size: int,
         date_from: Optional[datetime], date_to: Optional[datetime],
     ):
+        super().__init__(page, page_size)
         self._symbol = symbol.upper()
-        self._page = page
-        self._page_size = page_size
         self._date_from = date_from
         self._date_to = date_to
 
@@ -23,7 +23,7 @@ class CompanyNewsListService(BaseService):
             raise UnsupportedSymbol
 
     def _get_filter_kwargs(self):
-        kwargs = {'symbol': self._symbol}
+        kwargs = {'company__symbol': self._symbol}
 
         if self._date_from:
             kwargs['published_at__gte'] = self._date_from
@@ -33,19 +33,17 @@ class CompanyNewsListService(BaseService):
 
         return kwargs
 
-    def _get_offset(self):
-        return self._page_size * (self._page - 1)
-
-    async def _get_company_news(self, filter_kwargs: dict, offset: int):
+    async def _get_company_news(self, filter_kwargs: dict):
+        offset = self._get_offset()
         return await (
             News.filter(**filter_kwargs)
                 .order_by('-published_at')
                 .offset(offset)
-                .limit(self._page_size)  # noqa: C812
+                .limit(self._page_size)
+                .values('id', 'title', 'content', 'published_at', 'image_url')  # noqa: C812
         )
 
     async def do(self):
         self._validate()
         filter_kwargs = self._get_filter_kwargs()
-        offset = self._get_offset()
-        return await self._get_company_news(filter_kwargs, offset)
+        return await self._get_company_news(filter_kwargs)

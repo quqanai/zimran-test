@@ -15,6 +15,6 @@ app.add_middleware(
 )
 app.add_api_route('/news', handlers.get_news)
 app.add_api_route('/news/{news_id}', handlers.get_news_by_id)
-app.add_api_route('/news/company/{symbol}', handlers.get_news_by_symbol)
+app.add_api_route('/companies/{symbol}/news', handlers.get_news_by_symbol)
 
 register_tortoise(app, config=TORTOISE_CONFIG)
