@@ -6,15 +6,13 @@ from tortoise import Tortoise
 
 from code.config import TORTOISE_CONFIG
 from code.consts import SYMBOLS
-from code.services import CompanyNewsUpdateService
+from code.services import CompanyNewsUpdateService, CompanyUpdateService
 
 
 async def update_company_news():
-    tasks = (
-        CompanyNewsUpdateService(symbol).do()
-        for symbol in SYMBOLS
-    )
-    await asyncio.gather(*tasks)
+    for symbol in SYMBOLS:
+        company = await CompanyUpdateService(symbol).do()
+        await CompanyNewsUpdateService(company).do()
 
 
 scheduler = AsyncIOScheduler(timezone='UTC')

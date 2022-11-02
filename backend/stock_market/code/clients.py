@@ -12,6 +12,13 @@ class FinnhubClient(AsyncClient):
             },
         )
 
+    async def get_company_profile(self, symbol: str):
+        response = await self.get(
+            '/stock/profile2',
+            params={'symbol': symbol},
+        )
+        return response.json()
+
     async def get_company_news(self, symbol: str):
         response = await self.get(
             '/company-news',

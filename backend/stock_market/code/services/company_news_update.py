@@ -1,22 +1,22 @@
 from datetime import datetime
 
 from code.clients import FinnhubClient
-from code.models import News
+from code.models import Company, News
 from ._base import BaseService
 
 
 class CompanyNewsUpdateService(BaseService):
-    def __init__(self, symbol: str):
-        self._symbol = symbol
+    def __init__(self, company: Company):
+        self._company = company
 
     async def _fetch_company_news(self):
         async with FinnhubClient() as client:
-            return await client.get_company_news(self._symbol)
+            return await client.get_company_news(self._company.symbol)
 
     def _parse_news(self, news: dict):
         parsed_news = {
             'id': news['id'],
-            'symbol': self._symbol,
+            'company': self._company,
             'title': news['headline'],
             'content': None,
             'image_url': None,
@@ -36,7 +36,7 @@ class CompanyNewsUpdateService(BaseService):
         await News.bulk_create(
             objects,
             on_conflict=['id'],
-            update_fields=['symbol', 'title', 'content', 'image_url', 'published_at'],
+            update_fields=['company_symbol', 'title', 'content', 'image_url', 'published_at'],
         )
 
     async def do(self):
