@@ -13,7 +13,9 @@ async def update_company_news(is_initial: bool = False):
     for symbol in SYMBOLS:
         company = await CompanyUpdateService(symbol).do()
         await CompanyNewsUpdateService(company, is_initial).do()
-        await SubscriptionNotifyService(QUEUE_NAME, company).do()
+
+        if not is_initial:
+            await SubscriptionNotifyService(QUEUE_NAME, company).do()
 
 
 scheduler = AsyncIOScheduler(timezone='UTC')
