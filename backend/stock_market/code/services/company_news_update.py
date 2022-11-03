@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 from code.clients import FinnhubClient
 from code.models import Company, News
@@ -6,12 +6,21 @@ from ._base import BaseService
 
 
 class CompanyNewsUpdateService(BaseService):
-    def __init__(self, company: Company):
+    def __init__(self, company: Company, is_initial: bool):
         self._company = company
+        self._is_initial = is_initial
+
+    def _get_date_params(self):
+        today = date.today()
+
+        if self._is_initial:
+            return today - timedelta(days=7), today
+
+        return today, today
 
     async def _fetch_company_news(self):
         async with FinnhubClient() as client:
-            return await client.get_company_news(self._company.symbol)
+            return await client.get_company_news(self._company.symbol, *self._get_date_params())
 
     def _parse_news(self, news: dict):
         parsed_news = {

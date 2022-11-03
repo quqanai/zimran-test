@@ -1,3 +1,5 @@
+from datetime import date
+
 from httpx import AsyncClient
 
 from code.config import settings
@@ -19,13 +21,13 @@ class FinnhubClient(AsyncClient):
         )
         return response.json()
 
-    async def get_company_news(self, symbol: str):
+    async def get_company_news(self, symbol: str, date_from: date, date_to: date):
         response = await self.get(
             '/company-news',
             params={
                 'symbol': symbol,
-                'from': '2022-09-01',
-                'to': '2022-09-11',
+                'from': date_from.isoformat(),
+                'to': date_to.isoformat(),
             },
         )
         return response.json()
