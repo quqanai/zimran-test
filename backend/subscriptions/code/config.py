@@ -4,6 +4,7 @@ from pydantic import AmqpDsn, BaseSettings, PostgresDsn
 class Settings(BaseSettings):
     database_url: PostgresDsn
     rabbitmq_url: AmqpDsn = None
+    stock_market_url: str = None
 
     class Config:
         env_file = '.env'

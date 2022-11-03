@@ -11,6 +11,8 @@ aerich = "*"
 asyncpg = "*"
 email-validator = "*"
 aio-pika = "*"
+apscheduler = "*"
+httpx = "*"
 
 [dev-packages]
 flake8 = "*"

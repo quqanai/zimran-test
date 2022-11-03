@@ -71,6 +71,24 @@ services:
     tty: true
     command: uvicorn code.app:app --host 0.0.0.0 --reload
 
+  subscriptions-worker:
+    build: ./backend/subscriptions
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@subscriptions-db:5432/postgres
+      RABBITMQ_URL: amqp://rabbitmq:5672
+      STOCK_MARKET_URL: http://stock-market:8000
+    volumes:
+      - ./backend/subscriptions:/app
+    depends_on:
+      stock-market:
+        condition: service_started
+      subscriptions-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    tty: true
+    command: python -m code.worker
+
   subscriptions-consumer:
     build: ./backend/subscriptions
     environment:
