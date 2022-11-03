@@ -10,6 +10,7 @@ tortoise-orm = "*"
 aerich = "*"
 asyncpg = "*"
 email-validator = "*"
+aio-pika = "*"
 
 [dev-packages]
 flake8 = "*"
