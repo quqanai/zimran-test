@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  client:
+    build: ./frontend
+    environment:
+      VUE_APP_STOCK_MARKET_API_URL: http://localhost:8000
+      VUE_APP_SUBSCRIPTIONS_API_URL: http://localhost:9000
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - stock-market
+      - subscriptions
+    command: npm run serve
+    ports:
+      - '8080:8080'
+
   stock-market:
     build: ./backend/stock_market
     environment:
