@@ -1,5 +1,9 @@
 <template>
-  <div class="max-w-[600px] mx-auto overflow-hidden">
+  <the-container>
     <router-view :key="$route.query" />
-  </div>
+  </the-container>
 </template>
+
+<script setup>
+import TheContainer from "@/components/TheContainer.vue";
+</script>

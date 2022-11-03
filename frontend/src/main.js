@@ -5,6 +5,7 @@ import {
   faAngleRight,
   faCaretUp,
   faCaretDown,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -12,7 +13,14 @@ import App from "./App.vue";
 import router from "./router";
 import "./index.css";
 
-library.add(faAngleLeft, faAngleRight, faClock, faCaretUp, faCaretDown);
+library.add(
+  faAngleLeft,
+  faAngleRight,
+  faClock,
+  faCaretUp,
+  faCaretDown,
+  faXmark
+);
 
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
