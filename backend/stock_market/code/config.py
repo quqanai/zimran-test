@@ -1,8 +1,9 @@
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import AmqpDsn, BaseSettings, PostgresDsn
 
 
 class Settings(BaseSettings):
     database_url: PostgresDsn
+    rabbitmq_url: AmqpDsn = None
     finnhub_api_key: str = None
 
     class Config:

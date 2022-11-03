@@ -5,14 +5,15 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from tortoise import Tortoise
 
 from code.config import TORTOISE_CONFIG
-from code.consts import SYMBOLS
-from code.services import CompanyNewsUpdateService, CompanyUpdateService
+from code.consts import QUEUE_NAME, SYMBOLS
+from code.services import CompanyNewsUpdateService, CompanyUpdateService, SubscriptionNotifyService
 
 
 async def update_company_news():
     for symbol in SYMBOLS:
         company = await CompanyUpdateService(symbol).do()
         await CompanyNewsUpdateService(company).do()
+        await SubscriptionNotifyService(QUEUE_NAME, company).do()
 
 
 scheduler = AsyncIOScheduler(timezone='UTC')

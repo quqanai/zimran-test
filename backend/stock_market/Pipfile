@@ -12,6 +12,7 @@ aerich = "*"
 asyncpg = "*"
 apscheduler = "*"
 fastapi-pagination = "*"
+aio-pika = "*"
 
 [dev-packages]
 flake8 = "*"
