@@ -8,7 +8,7 @@ from ._base import BaseService
 class SubscriptionCreateService(BaseService):
     def __init__(self, email: str, symbol: str):
         self._email = email
-        self._symbol = symbol
+        self._symbol = symbol.upper()
 
     async def _create_subscription(self):
         try:

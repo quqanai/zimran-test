@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aio-pika = "*"
+pydantic = "*"
+aiosmtplib = "*"
+email-validator = "*"
+
+[dev-packages]
+flake8 = "*"
+flake8-print = "*"
+flake8-multiline-containers = "*"
+flake8-builtins = "*"
+flake8-import-order = "*"
+flake8-commas = "*"
+flake8-quotes = "*"
+
+[requires]
+python_version = "3.9"

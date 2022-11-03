@@ -19,10 +19,12 @@ services:
     environment:
       FINNHUB_API_KEY: cb36h0aad3i3uh8votcg
       DATABASE_URL: postgres://postgres:postgres@stock-market-db:5432/postgres
+      RABBITMQ_URL: amqp://rabbitmq:5672
     volumes:
       - ./stock_market:/app
     depends_on:
       - stock-market-db
+      - rabbitmq
     tty: true
     command: python -m code.worker
 
@@ -46,9 +48,40 @@ services:
     tty: true
     command: uvicorn code.app:app --host 0.0.0.0 --reload
 
+  subscriptions-consumer:
+    build: ./subscriptions
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@subscriptions-db:5432/postgres
+      RABBITMQ_URL: amqp://rabbitmq:5672
+    volumes:
+      - ./subscriptions:/app
+    depends_on:
+      - subscriptions-db
+      - rabbitmq
+    tty: true
+    command: python -m code.consumer
+
   subscriptions-db:
     image: postgres:alpine
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
       - '5433:5432'
+
+  notifications-consumer:
+    build: ./notifications
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:5672
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_PORT: 465
+      EMAIL_USERNAME: quqanai.quqanai@gmail.com
+      EMAIL_PASSWORD: hvzwicxeepalfzge
+    volumes:
+      - ./notifications:/app
+    depends_on:
+      - rabbitmq
+    tty: true
+    command: python -m code.consumer
+
+  rabbitmq:
+    image: rabbitmq:alpine
