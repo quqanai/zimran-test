@@ -15,7 +15,7 @@ class NewsDetailsService(BaseService):
                 News.get(id=self._news_id)
                     .values(
                         'id', 'title', 'content', 'published_at', 'image_url',
-                        'company__name', 'company__logo_url',
+                        'company__name', 'company__logo_url', 'company__symbol',
                     )  # noqa: C812
             )
         except DoesNotExist:

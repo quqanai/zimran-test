@@ -6,7 +6,12 @@
     </h1>
     <time-stamp class="mb-4" :datetime="state.news.published_at" />
     <img class="rounded-lg mb-4" :src="state.news.image_url" />
-    <p class="text-base text-[#636366]">{{ state.news.content }}</p>
+    <p class="text-base text-[#636366] mb-6">{{ state.news.content }}</p>
+    <company-price
+      :companyName="state.news.company__name"
+      :logoUrl="state.news.company__logo_url"
+      :symbol="state.news.company__symbol"
+    />
   </main>
 </template>
 
@@ -15,6 +20,7 @@ import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 import TheHeader from "@/components/TheHeader/TheHeader.vue";
 import TimeStamp from "@/components/TimeStamp.vue";
+import CompanyPrice from "@/components/CompanyPrice/CompanyPrice.vue";
 import { fetchNewsDetails } from "@/api/newsApi";
 
 const route = useRoute();
