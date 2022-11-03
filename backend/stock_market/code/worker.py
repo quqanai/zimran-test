@@ -1,5 +1,4 @@
 import asyncio
-from datetime import datetime
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from tortoise import Tortoise
@@ -19,10 +18,7 @@ async def update_company_news(is_initial: bool = False):
 
 
 scheduler = AsyncIOScheduler(timezone='UTC')
-scheduler.add_job(
-    update_company_news,
-    'interval', hours=1, next_run_time=datetime.utcnow(),
-)
+scheduler.add_job(update_company_news, 'interval', hours=1)
 
 
 def main():
